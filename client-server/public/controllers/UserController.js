@@ -173,8 +173,8 @@ class UserController {
   }//Closing the method getValues
  
   selectAll(){
-    
-    HttpRequest.get('/users').then(data => {
+
+    User.getUsers().then(data => {
       
       data.users.forEach(dataUser =>{
     
@@ -231,13 +231,14 @@ class UserController {
 
                 user.loadFromJSON(JSON.parse(tr.dataset.user));
 
-                user.removeUser();
+                user.removeUser().then(data => {
 
-                tr.remove();
+                  tr.remove();
                 
-                this.updateCount();
-            }
-          
+                  this.updateCount();
+
+                });
+              }
           });
 
           tr.querySelector(".btn-edit").addEventListener("click", e => {

@@ -91,31 +91,13 @@ class User{
             }
         }
     }
-    static getUsersStorage(){
-        let users = [];
-    
-        if(localStorage.getItem("users")){
-    
-            users = JSON.parse(localStorage.getItem("users"));
-    
-        } 
-        return users;
-      }
+    static getUsers(){
+        
+        return HttpRequest.get(`/users`);
 
-      getNewID(){
+    }
 
-       let userID =  parseInt(localStorage.getItem("usersID"));
-
-        if(!userID > 0) userID = 0;
-
-        userID++;
-
-        localStorage.setItem("usersID", userID);
-
-        return userID;
-      }
-
-      toJSON(){
+    toJSON(){
 
         let json = {};
 
@@ -159,16 +141,8 @@ class User{
     }
     
     removeUser(){
-        let users = User.getUsersStorage();
+    
+        return HttpRequest.delete(`/users/${this.id}`);
         
-        users.forEach((userData, index) =>{
-            
-            if(this._id == userData._id){
-                users.splice(index, 1);
-            }
-        });
-     
-        localStorage.setItem("users", JSON.stringify(users));
-  
     }
 }
